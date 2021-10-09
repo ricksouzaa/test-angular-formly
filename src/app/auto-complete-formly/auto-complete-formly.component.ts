@@ -8,7 +8,6 @@ import { FieldType } from '@ngx-formly/core';
   styleUrls: ['./auto-complete-formly.component.scss']
 })
 export class AutoCompleteFormlyComponent extends FieldType {
-
   get toFormControl(): FormControl {
     return this.formControl as FormControl;
   }

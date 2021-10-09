@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
-import { subscribeToResult } from 'rxjs/internal-compatibility';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { Country, CountryService } from './country.service';
+import { CountryService } from './country.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +10,7 @@ import { Country, CountryService } from './country.service';
 })
 export class AppComponent {
   form = new FormGroup({});
-  model: any;
+  model: any = {};
   fields: FormlyFieldConfig[] = [
     {
       key: 'country',
@@ -23,12 +21,8 @@ export class AppComponent {
         required: true,
         keyField: 'id',
         labelField: 'name',
-        completeMethod: (templateOptions: FormlyTemplateOptions, $event: any) => {
-          this.countryService.listByName($event.query)
-            .pipe(
-              debounceTime(500),
-              distinctUntilChanged(),
-            )
+        completeMethod: (templateOptions: FormlyTemplateOptions, event: any) => {
+          this.countryService.listByName(event.query)
             .subscribe(data => templateOptions.results = data)
         }
       }
@@ -36,11 +30,6 @@ export class AppComponent {
   ];
 
   constructor(private countryService: CountryService) {
-    this.model = {country: this.countryService.countries[0]};
-  }
-
-  onSubmit() {
-    console.log({...this.model});
   }
 
 }
