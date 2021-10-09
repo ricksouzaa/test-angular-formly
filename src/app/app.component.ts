@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
+import { subscribeToResult } from 'rxjs/internal-compatibility';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { Country, CountryService } from './country.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +11,36 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'test-formly';
+  form = new FormGroup({});
+  model: any;
+  fields: FormlyFieldConfig[] = [
+    {
+      key: 'country',
+      type: 'autoComplete',
+      templateOptions: {
+        label: 'Pais',
+        placeholder: 'Selecione um pais',
+        required: true,
+        keyField: 'id',
+        labelField: 'name',
+        completeMethod: (templateOptions: FormlyTemplateOptions, $event: any) => {
+          this.countryService.listByName($event.query)
+            .pipe(
+              debounceTime(500),
+              distinctUntilChanged(),
+            )
+            .subscribe(data => templateOptions.results = data)
+        }
+      }
+    }
+  ];
+
+  constructor(private countryService: CountryService) {
+    this.model = {country: this.countryService.countries[0]};
+  }
+
+  onSubmit() {
+    console.log({...this.model});
+  }
+
 }
