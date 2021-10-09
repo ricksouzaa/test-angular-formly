@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
 import { CountryService } from './country.service';
+import { StateService } from './state.service';
 
 @Component({
   selector: 'app-root',
@@ -11,25 +12,38 @@ import { CountryService } from './country.service';
 export class AppComponent {
   form = new FormGroup({});
   model: any = {};
-  fields: FormlyFieldConfig[] = [
-    {
-      key: 'country',
-      type: 'autoComplete',
-      templateOptions: {
-        label: 'Pais',
-        placeholder: 'Selecione um pais',
-        required: true,
-        keyField: 'id',
-        labelField: 'name',
-        completeMethod: (templateOptions: FormlyTemplateOptions, event: any) => {
-          this.countryService.listByName(event.query)
-            .subscribe(data => templateOptions.results = data)
+  fields: FormlyFieldConfig[];
+
+  constructor(
+    private countryService: CountryService,
+    private stateService: StateService
+  ) {
+    this.fields = [
+      {
+        key: 'country',
+        type: 'autoComplete',
+        templateOptions: {
+          label: 'Pais',
+          placeholder: 'Selecione um pais',
+          required: true,
+          keyField: 'id',
+          labelField: 'name',
+          service: this.countryService
+        }
+      },
+      {
+        key: 'state',
+        type: 'autoComplete',
+        templateOptions: {
+          label: 'Estado',
+          placeholder: 'Selecione um estado',
+          required: true,
+          keyField: 'id',
+          labelField: 'name',
+          service: this.stateService
         }
       }
-    }
-  ];
-
-  constructor(private countryService: CountryService) {
+    ];
   }
 
 }

@@ -4,6 +4,6 @@
   [formControl]="toFormControl"
   [formlyAttributes]="field"
   [forceSelection]="true"
-  [suggestions]="to.results"
-  (completeMethod)="to.completeMethod(to, $event)">
+  [suggestions]="suggestions"
+  (completeMethod)="completeMethod($event)">
 </p-autoComplete>
