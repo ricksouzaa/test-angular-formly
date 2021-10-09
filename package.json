@@ -1,6 +1,8 @@
 {
   "name": "test-formly",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": "Ricardo Antonio de Souza",
+  "description": "Teste da biblioteca Angular Formly",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
