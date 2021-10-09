@@ -14,6 +14,7 @@ import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { AutoCompleteFormlyComponent } from './auto-complete-formly/auto-complete-formly.component';
 import { InputNumberFormlyComponent } from './input-number-formly/input-number-formly.component';
 import { CurrencyFormatPipe } from './pipe/currency-format.pipe';
+import { DecimalFormatPipe } from './pipe/decimal-format.pipe';
 
 export const DefaultCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -33,7 +34,8 @@ export const DefaultCurrencyMaskConfig: CurrencyMaskConfig = {
     AppComponent,
     AutoCompleteFormlyComponent,
     InputNumberFormlyComponent,
-    CurrencyFormatPipe
+    CurrencyFormatPipe,
+    DecimalFormatPipe
   ],
   imports: [
     BrowserModule,
