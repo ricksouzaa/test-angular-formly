@@ -42,6 +42,15 @@ export class AppComponent {
           labelField: 'name',
           service: this.stateService
         }
+      },
+      {
+        key: 'price',
+        type: 'inputNumber',
+        templateOptions: {
+          label: 'Valor',
+          placeholder: 'Informe um valor',
+          required: true
+        }
       }
     ];
   }
